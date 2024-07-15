@@ -1,6 +1,5 @@
 """Модуль 24"""
 import json
-
 import requests
 from requests_toolbelt.multipart.encoder import MultipartEncoder
 
@@ -9,7 +8,7 @@ class PetFriends:
     """апи библиотека к веб приложению Pet Friends"""
 
     def __init__(self):
-        self.base_url = "https://petfriends.skillfactory.ru/all_pets"
+        self.base_url = "https://petfriends.skillfactory.ru/"
 
     def get_api_key(self, email: str, passwd: str) -> json:
         """Метод делает запрос к API сервера и возвращает статус запроса и результат в формате
@@ -19,9 +18,8 @@ class PetFriends:
             'email': email,
             'password': passwd,
         }
-        res = requests.get(self.base_url+'api/key', headers=headers)
+        res = requests.get(f"{self.base_url}api/key", headers=headers)
         status = res.status_code
-        result = ""
         try:
             result = res.json()
         except json.decoder.JSONDecodeError:
@@ -37,9 +35,8 @@ class PetFriends:
         headers = {'auth_key': auth_key['key']}
         filter = {'filter': filter}
 
-        res = requests.get(self.base_url + 'api/pets', headers=headers, params=filter)
+        res = requests.get(f"{self.base_url}api/pets", headers=headers, params=filter)
         status = res.status_code
-        result = ""
         try:
             result = res.json()
         except json.decoder.JSONDecodeError:
@@ -60,14 +57,12 @@ class PetFriends:
             })
         headers = {'auth_key': auth_key['key'], 'Content-Type': data.content_type}
 
-        res = requests.post(self.base_url + 'api/pets', headers=headers, data=data)
+        res = requests.post(f"{self.base_url}api/pets", headers=headers, data=data)
         status = res.status_code
-        result = ""
         try:
             result = res.json()
         except json.decoder.JSONDecodeError:
             result = res.text
-        print(result)
         return status, result
 
     def delete_pet(self, auth_key: json, pet_id: str) -> json:
@@ -77,9 +72,8 @@ class PetFriends:
 
         headers = {'auth_key': auth_key['key']}
 
-        res = requests.delete(self.base_url + 'api/pets/' + pet_id, headers=headers)
+        res = requests.delete(f"{self.base_url}api/pets/{pet_id}", headers=headers)
         status = res.status_code
-        result = ""
         try:
             result = res.json()
         except json.decoder.JSONDecodeError:
@@ -98,9 +92,8 @@ class PetFriends:
             'animal_type': animal_type
         }
 
-        res = requests.put(self.base_url + 'api/pets/' + pet_id, headers=headers, data=data)
+        res = requests.put(f"{self.base_url}api/pets/{pet_id}", headers=headers, data=data)
         status = res.status_code
-        result = ""
         try:
             result = res.json()
         except json.decoder.JSONDecodeError:
