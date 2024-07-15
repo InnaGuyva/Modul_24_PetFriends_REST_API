@@ -17,8 +17,13 @@
 Тесты проверяют работу методов используя api библиотеку.
 
 Перед началом работы установить виртуальное окружение:
+
 python -m venv venv
+
 venv/scripts/activate
 
-Установить библиотеку:
+Установить библиотеки:
+
 pip install requests
+
+pip install requests-toolbelt
